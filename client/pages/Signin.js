@@ -1,22 +1,24 @@
 /** @jsx jsx */
 
-import { useState } from 'react';
-import { jsx } from '@emotion/core';
+import { useState } from "react";
+import { jsx } from "@emotion/core";
 
-import { Alert } from '@arch-ui/alert';
-import { LoadingButton } from '@arch-ui/button';
-import { Input } from '@arch-ui/input';
-import { colors, gridSize } from '@arch-ui/theme';
-import { PageTitle, Title } from '@arch-ui/typography';
+import { Alert } from "@arch-ui/alert";
+import { LoadingButton } from "@arch-ui/button";
+import { Input } from "@arch-ui/input";
+import { colors, gridSize } from "@arch-ui/theme";
+import { PageTitle, Title } from "@arch-ui/typography";
 
-import { gql, useMutation } from '@apollo/client';
+import { gql, useMutation } from "@apollo/client";
 
-import { upcase } from '@keystonejs/utils';
+import { upcase } from "@keystonejs/utils";
 
-import KeystoneLogo from '../components/KeystoneLogo';
+import KeystoneLogo from "../components/KeystoneLogo";
 
-import { useAdminMeta } from '../providers/AdminMeta';
-import { useUIHooks } from '../providers/Hooks';
+import { useAdminMeta } from "../providers/AdminMeta";
+import { useUIHooks } from "../providers/Hooks";
+
+import { errorHandler } from "../util"
 
 const _PADDING = gridSize * 2;
 const _BUTTON_WIDTH = 280;
@@ -24,29 +26,29 @@ const _BUTTON_WIDTH = 280;
 const Container = props => (
   <div
     css={{
-      alignItems: 'center',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      minHeight: '100vh',
-      width: '100%',
+      alignItems: "center",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      minHeight: "100vh",
+      width: "100%",
     }}
     {...props}
   />
 );
 
-const Alerts = props => <div css={{ height: '48px' }} {...props} />;
+const Alerts = props => <div css={{ height: "48px" }} {...props} />;
 
 const Form = props => (
   <form
     css={{
-      marginBottom: '120px',
-      minWidth: '650px',
-      padding: '40px',
-      display: 'flex',
-      flexWrap: 'nowrap',
-      justifyContent: 'center',
-      alignItems: 'center',
+      marginBottom: "120px",
+      minWidth: "650px",
+      padding: "40px",
+      display: "flex",
+      flexWrap: "nowrap",
+      justifyContent: "center",
+      alignItems: "center",
     }}
     {...props}
   />
@@ -56,10 +58,10 @@ const Divider = props => (
   <div
     css={{
       borderRight: `2px solid ${colors.N10}`,
-      minHeight: '450px',
-      lineHeight: '450px',
-      marginRight: '40px',
-      marginLeft: '60px',
+      minHeight: "450px",
+      lineHeight: "450px",
+      marginRight: "40px",
+      marginLeft: "60px",
     }}
     {...props}
   />
@@ -93,8 +95,8 @@ const SignInPage = () => {
 
   const { logo: getCustomLogo } = useUIHooks();
 
-  const [identity, setIdentity] = useState('');
-  const [secret, setSecret] = useState('');
+  const [identity, setIdentity] = useState("");
+  const [secret, setSecret] = useState("");
   const [reloading, setReloading] = useState(false);
 
   const AUTH_MUTATION = gql`
@@ -110,16 +112,16 @@ const SignInPage = () => {
   const [signIn, { error, loading, client }] = useMutation(AUTH_MUTATION, {
     variables: { identity, secret },
     onCompleted: async () => {
-      // Flag so the "Submit" button doesn't temporarily flash as available while reloading the page.
+      // Flag so the "Submit" button doesn"t temporarily flash as available while reloading the page.
       setReloading(true);
 
-      // Ensure there's no old unauthenticated data hanging around
+      // Ensure there"s no old unauthenticated data hanging around
       await client.clearStore();
 
       // Let the server-side redirects kick in to send the user to the right place
       window.location.reload(true);
     },
-    onError: () => {}, // Remove once a bad password no longer throws an error
+    onError: () => { }, // Remove once a bad password no longer throws an error
   });
 
   const onSubmit = e => {
@@ -130,7 +132,7 @@ const SignInPage = () => {
     }
   };
 
-  if(error){
+  if (error) {
     console.log(error)
   }
 
@@ -154,7 +156,7 @@ const SignInPage = () => {
               value={identity}
               onChange={e => setIdentity(e.target.value)}
             />
-            <FieldLabel>{upcase(secretField)}</FieldLabel>
+            <FieldLabel>Password</FieldLabel>
             <Input
               type="password"
               name="secret"
@@ -170,7 +172,7 @@ const SignInPage = () => {
             indicatorVariant="dots"
             css={{
               width: `${_BUTTON_WIDTH}px`,
-              height: '2.6em',
+              height: "2.6em",
               margin: `${_PADDING}px 0`,
             }}
           >

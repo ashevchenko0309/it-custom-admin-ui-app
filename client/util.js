@@ -242,3 +242,29 @@ export function useListSelect(items) {
 
   return [selectedItems, onSelect];
 }
+
+// ==============================
+// Custom login errors
+// ==============================
+
+export function errorHandler(error) {
+  const regexp = /\[[^\]]*]/g
+  const match = error.match(regexp)
+
+  if(!match) return null;
+
+  switch (match[0]){
+    case "[passwordAuth:identity:notFound]": {
+      return "User not found"
+    }
+    case "[passwordAuth:secret:mismatch]": {
+      return "Your username or password were incorrect"
+    }
+    case "[passwordAuth:identity:access_not_allowed]": {
+      return "No access..."
+    }
+    default: {
+      return null
+    }
+  }
+}
