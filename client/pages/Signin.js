@@ -139,7 +139,7 @@ const SignInPage = () => {
   return (
     <Container>
       <Alerts>
-        {error && <Alert appearance="danger">Your username or password were incorrect</Alert>}
+        {error && <Alert appearance="danger">{errorHandler(error)}</Alert>}
       </Alerts>
       <Form method="post" onSubmit={onSubmit}>
         {getCustomLogo ? getCustomLogo() : <KeystoneLogo />}
