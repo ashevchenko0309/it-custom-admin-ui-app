@@ -132,10 +132,6 @@ const SignInPage = () => {
     }
   };
 
-  if (error) {
-    console.log(error)
-  }
-
   return (
     <Container>
       <Alerts>
