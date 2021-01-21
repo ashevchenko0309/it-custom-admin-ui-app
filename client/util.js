@@ -247,7 +247,8 @@ export function useListSelect(items) {
 // Custom login errors
 // ==============================
 
-export function errorHandler(error) {
+export function errorHandler(err) {
+  const error = err.toString()
   const regexp = /\[[^\]]*]/g
   const match = error.match(regexp)
 
